@@ -1,9 +1,24 @@
 package com.bobo.cms.domain;
 
-public class ArticleWithBLOBs extends Article {
-    private String content;//ÎÄÕÂÄÚÈİ
+import java.io.Serializable;
+/**
+ * 
+ * @ClassName: ArticleWithBLOBs 
+ * @Description: æ–‡ç«  -åŒ…å«å¤§æ–‡æœ¬
+ * @author: charles
+ * @date: 2019å¹´12æœˆ10æ—¥ ä¸‹åˆ3:08:35
+ */
+public class ArticleWithBLOBs extends Article implements Serializable {
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 3784014497633443444L;
 
-    private String summary;//ÎÄÕÂÕªÒª
+	private String content;//æ–‡ç« å†…å®¹
+
+    private String summary;//æ–‡ç« æ‘˜è¦
 
     public String getContent() {
         return content;

@@ -1,7 +1,22 @@
 package com.bobo.cms.domain;
 
-public class Channel {
-    private Integer id;
+import java.io.Serializable;
+/**
+ * 
+ * @ClassName: Channel 
+ * @Description: 栏目
+ * @author: charles
+ * @date: 2019年12月10日 下午3:09:04
+ */
+public class Channel  implements Serializable{
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String name;
 

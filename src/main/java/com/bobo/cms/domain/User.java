@@ -1,27 +1,41 @@
 package com.bobo.cms.domain;
 
+import java.io.Serializable;
 import java.util.Date;
+/**
+ * 
+ * @ClassName: User 
+ * @Description: 用户的管理
+ * @author: charles
+ * @date: 2019年12月10日 下午2:59:44
+ */
+public class User implements Serializable{
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 
-public class User {
-    private Integer id;
+	private Integer id;
 
     private String username;
 
     private String password;
 
-    private String nickname;
+    private String nickname;//昵称
 
-    private Date birthday;
+    private Date birthday;//
 
-    private Integer gender;
+    private Integer gender;//0:女,1:男
 
-    private Integer locked;
+    private Integer locked;//1:禁用 .0:正常.默认 0
 
     private Date created;
 
     private Date updated;
 
-    private String role;
+    private String role;//角色: 0:普通用户  1:管理员
 
     private String url;
 
@@ -112,4 +126,34 @@ public class User {
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	
+
+	
+    
 }

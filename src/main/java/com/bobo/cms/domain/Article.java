@@ -1,9 +1,23 @@
 package com.bobo.cms.domain;
 
+import java.io.Serializable;
 import java.util.Date;
+/**
+ * 
+ * @ClassName: Article 
+ * @Description: 文章
+ * @author: charles
+ * @date: 2019年12月10日 下午3:08:27
+ */
+public class Article implements Serializable {
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 
-public class Article {
-    private Integer id;
+	private Integer id;
 
     private String title;
 
@@ -152,4 +166,31 @@ public class Article {
     public void setOriginal(String original) {
         this.original = original == null ? null : original.trim();
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Article other = (Article) obj;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+    
+    
 }

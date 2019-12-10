@@ -1,7 +1,22 @@
 package com.bobo.cms.domain;
 
-public class Slide {
-    private Integer id;
+import java.io.Serializable;
+/**
+ * 
+ * @ClassName: Slide 
+ * @Description: 轮播图
+ * @author: charles
+ * @date: 2019年12月10日 下午3:10:19
+ */
+public class Slide implements Serializable{
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String title;
 

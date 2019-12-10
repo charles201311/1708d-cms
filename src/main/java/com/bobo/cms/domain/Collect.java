@@ -1,9 +1,23 @@
 package com.bobo.cms.domain;
 
+import java.io.Serializable;
 import java.util.Date;
+/**
+ * 
+ * @ClassName: Collect 
+ * @Description: 收藏
+ * @author: charles
+ * @date: 2019年12月10日 下午3:09:33
+ */
+public class Collect implements Serializable { 
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 
-public class Collect {
-    private Integer id;
+	private Integer id;
 
     private String text;
 

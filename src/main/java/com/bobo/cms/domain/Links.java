@@ -1,9 +1,23 @@
 package com.bobo.cms.domain;
 
+import java.io.Serializable;
 import java.util.Date;
+/**
+ * 
+ * @ClassName: Links 
+ * @Description: 友情链接
+ * @author: charles
+ * @date: 2019年12月10日 下午3:09:42
+ */
+public class Links implements Serializable{
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 
-public class Links {
-    private Integer id;
+	private Integer id;
 
     private String text;
 

@@ -1,7 +1,22 @@
 package com.bobo.cms.domain;
 
-public class Category {
-    private Integer id;
+import java.io.Serializable;
+/**
+ * 
+ * @ClassName: Category 
+ * @Description: 分类
+ * @author: charles
+ * @date: 2019年12月10日 下午3:08:55
+ */
+public class Category implements Serializable{
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String name;
 
