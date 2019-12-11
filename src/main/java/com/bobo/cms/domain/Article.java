@@ -28,6 +28,11 @@ public class Article implements Serializable {
     private Integer categoryId;
 
     private Integer userId;
+    
+    private User user;//发布人
+    
+    private Channel channel;//栏目
+    private Category category;//分类
 
     private Integer hits;
 
@@ -47,7 +52,33 @@ public class Article implements Serializable {
 
     private String original;
 
-    public Integer getId() {
+    
+    
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Integer getId() {
         return id;
     }
 

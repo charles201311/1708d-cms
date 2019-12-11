@@ -1,9 +1,21 @@
 package com.bobo.cms.dao;
 
+import java.util.List;
+
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.ArticleWithBLOBs;
 
 public interface ArticleMapper {
+	/**
+	 * 
+	 * @Title: selects 
+	 * @Description: 查询文章
+	 * @param article
+	 * @return
+	 * @return: List<Article>
+	 */
+	List<Article> selects(Article article);
+	
     int deleteByPrimaryKey(Integer id);
 
     int insert(ArticleWithBLOBs record);

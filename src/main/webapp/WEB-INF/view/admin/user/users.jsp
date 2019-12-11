@@ -14,12 +14,12 @@
  <script type="text/javascript">
  function goPage(page){
 	 //location.href="/user/selects?page="+page
-		var  url="/user/selects?page="+page
+		var  url="/admin/user/selects?page="+page
 		$("#center").load(url);	 //
 			 
  }
  function query(){
-	 var  url="/user/selects?username="+$("[name='username']").val()
+	 var  url="/admin/user/selects?username="+$("[name='username']").val()
 	 $("#center").load(url)
  }
  

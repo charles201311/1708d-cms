@@ -26,13 +26,13 @@
 			
 			  <div style="margin-top: 30px">
 				<nav class="navbar navbar-light bg-light">
-					<a class="navbar-brand" href="#" data="/user/selects">用户管理</a>
+					<a class="navbar-brand" href="#" data="/admin/user/selects">用户管理</a>
 				</nav>
 
 				<!-- As a heading -->
 				<nav class="navbar navbar-light bg-light">
 					<span class="navbar-brand mb-0 h1">
-					<a class="navbar-brand" href="#" data="/article/selects">文章管理</a>
+					<a class="navbar-brand" href="#" data="/admin/article/selects">文章管理</a>
 					</span>
 				</nav>
 				<!-- As a heading -->

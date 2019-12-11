@@ -17,6 +17,13 @@
     <result column="content_type" property="contentType" jdbcType="INTEGER" />
     <result column="keywords" property="keywords" jdbcType="VARCHAR" />
     <result column="original" property="original" jdbcType="VARCHAR" />
+    
+    <!-- 封装单个对象. user -->
+    <association property="user" select="com.bobo.cms.dao.UserMapper.selectByPrimaryKey" column="user_id"></association>
+    <association property="channel" select="com.bobo.cms.dao.ChannelMapper.selectByPrimaryKey" column="channel_id"></association>
+    <association property="category" select="com.bobo.cms.dao.CategoryMapper.selectByPrimaryKey" column="category_id"></association>
+
+ 
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.bobo.cms.domain.ArticleWithBLOBs" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -29,6 +36,27 @@
   <sql id="Blob_Column_List" >
     content, summary
   </sql>
+  
+  <select id="selects" resultMap="BaseResultMap">
+   
+  select <include refid="Base_Column_List"/> from cms_article
+    <where>
+     <!-- 按照标题查询 -->
+     <if test="title!=null and title!=''">
+      title like "%" #{title} "%"
+     </if>
+    
+      <!-- 文章状态 -->
+     <if test="status!=null and status!=99">
+      and  status =#{status}
+     </if>
+     
+    
+    
+    </where>
+  
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
