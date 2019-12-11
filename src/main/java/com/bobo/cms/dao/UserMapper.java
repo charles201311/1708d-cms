@@ -2,6 +2,8 @@ package com.bobo.cms.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.bobo.cms.domain.User;
 
 public interface UserMapper {
@@ -13,7 +15,7 @@ public interface UserMapper {
 	 * @return
 	 * @return: List<User>
 	 */
-	List<User> selects(String name);
+	List<User> selects(@Param("username")String username);
 	
     int deleteByPrimaryKey(Integer id);
 

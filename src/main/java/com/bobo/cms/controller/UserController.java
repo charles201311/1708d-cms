@@ -5,8 +5,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.UserService;
@@ -25,14 +27,27 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping("selects")
-	public String selects(Model model,String name,
+	public String selects(Model model,String username,
 			@RequestParam(defaultValue = "1")Integer page,
 			@RequestParam(defaultValue = "3")Integer pageSize) {
-		PageInfo<User> info = userService.selects(name, page, pageSize);
+		PageInfo<User> info = userService.selects(username, page, pageSize);
 		model.addAttribute("info", info);
-		model.addAttribute("name", name);
+		model.addAttribute("username", username);
 		
 		return "admin/user/users";
+	}
+	/**
+	 * 
+	 * @Title: update 
+	 * @Description: 修改用户
+	 * @param user
+	 * @return
+	 * @return: boolean
+	 */
+	@ResponseBody
+	@PostMapping("update")
+	public boolean update(User user) {
+		return userService.updateByPrimaryKeySelective(user)>0;
 	}
 
 }
