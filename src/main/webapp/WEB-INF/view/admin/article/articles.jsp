@@ -73,7 +73,7 @@
  <script type="text/javascript">
  function goPage(page){
 	 //location.href="/user/selects?page="+page
-		var  url="/admin/article/selects?page="+page
+		var  url="/admin/article/selects?page="+page+"&title="+$("[name='title']").val()+"&status="+$("[name='status']").val()
 		$("#center").load(url);	 //
 			 
  }
