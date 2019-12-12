@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
-String htmlData = request.getParameter("content1") != null ? request.getParameter("content1") : "";
+String htmlData = request.getParameter("content") != null ? request.getParameter("content") : "";
 %>
 <!doctype html>
 <html>
@@ -13,13 +13,17 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 	href="/resource/kindeditor/themes/default/default.css" />
 <link rel="stylesheet"
 	href="/resource/kindeditor/plugins/code/prettify.css" />
+<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
 <script charset="utf-8" src="/resource/kindeditor/kindeditor.js"></script>
 <script charset="utf-8" src="/resource/kindeditor/lang/zh-CN.js"></script>
 <script charset="utf-8"
 	src="/resource/kindeditor/plugins/code/prettify.js"></script>
+
 <script>
+$(function(){
+	
 		KindEditor.ready(function(K) {
-			var editor1 = K.create('textarea[name="content1"]', {
+			window.editor1 = K.create('textarea[name="content"]', {
 				cssPath : '/resource/kindeditor/plugins/code/prettify.css',
 				uploadJson : '/resource/kindeditor/jsp/upload_json.jsp',
 				fileManagerJson : '/resource/kindeditor/jsp/file_manager_json.jsp',
@@ -38,46 +42,79 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 			});
 			prettyPrint();
 		});
+});
 	</script>
 </head>
 <body>
-	<%=htmlData%>
-
-
-
-	<form name="example" method="post" action="demo.jsp">
+	<form id="form1">
 		<div class="form-group">
 			<label for="title">文章标题:</label> <input id="title"
 				class="form-control" type="text" name="title">
 
 		</div>
 		<div class="form-group form-inline">
-			<label>文章栏目:</label> <select class="form-control" name="channelId" id="channel">
-                   <option>请选择</option>
+			<label>文章栏目:</label> <select class="form-control" name="channelId"
+				id="channel">
+				<option>请选择</option>
 
-			</select>
-			
-			<label>文章分类:</label> <select class="form-control" name="categoryId" id="category">
-               <option>请选择</option>
+			</select> <label>文章分类:</label> <select class="form-control" name="categoryId"
+				id="category">
+				<option>请选择</option>
 
 			</select>
 		</div>
-        <div  class="form-group">
-         文章标题图片:
-         <input type="file" name="file" class="form-control">
-        
-        </div>
+		<div class="form-group">
+			文章标题图片: <input type="file" name="file" class="form-control">
 
-
-		<textarea name="content1" cols="100" rows="8"
+		</div>
+		<textarea name="content" cols="100" rows="8"
 			style="width: 100%; height: 250px; visibility: hidden;"><%=htmlspecialchars(htmlData)%></textarea>
-		<br /> <input type="submit" name="button" value="提交内容" />
-
+		<br />
+		<button class="btn btn-info" type="button" onclick="publish()">发布文章</button>
 
 	</form>
+
 </body>
 
 <script type="text/javascript">
+//发布文章
+function publish(){
+	
+	var formData = new FormData($("#form1")[0]);
+	//alert(formData)
+	//封装带html格式的内容
+     formData.set("content",editor1.html());
+	$.ajax({
+		type:"post",
+		url:"/my/article/publish",
+		data:formData,
+		// 告诉jQuery不要去处理发送的数据
+		processData : false,
+		// 告诉jQuery不要去设置Content-Type请求头
+		contentType : false,
+		success:function(flag){
+			if(flag){
+				alert("发布成功");
+			}else{
+				alert("发布失败");
+			}
+		}
+		
+		
+		
+		
+	})
+	
+	
+	
+	
+	
+}
+
+
+
+
+
 $(function(){
 	
 	//查询所有栏目并回显

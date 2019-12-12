@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
-String htmlData = request.getParameter("content1") != null ? request.getParameter("content1") : "";
+String htmlData = request.getParameter("content") != null ? request.getParameter("content") : "";
 %>
 <!doctype html>
 <html>
@@ -15,7 +15,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 	<script charset="utf-8" src="/resource/kindeditor/plugins/code/prettify.js"></script>
 	<script>
 		KindEditor.ready(function(K) {
-			var editor1 = K.create('textarea[name="content1"]', {
+			window.editor1 = K.create('textarea[name="content"]', {
 				cssPath : '/resource/kindeditor/plugins/code/prettify.css',
 				uploadJson : '/resource/kindeditor/jsp/upload_json.jsp',
 				fileManagerJson : '/resource/kindeditor/jsp/file_manager_json.jsp',
@@ -39,7 +39,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 <body>
 	<%=htmlData%>
 	<form name="example" method="post" action="demo.jsp">
-		<textarea name="content1" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;"><%=htmlspecialchars(htmlData)%></textarea>
+		<textarea name="content" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;"><%=htmlspecialchars(htmlData)%></textarea>
 		<br />
 		<input type="submit" name="button" value="提交内容" /> (提交快捷键: Ctrl + Enter)
 	</form>

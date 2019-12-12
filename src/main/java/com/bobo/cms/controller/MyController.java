@@ -1,16 +1,24 @@
 package com.bobo.cms.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bobo.cms.domain.ArticleWithBLOBs;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
 
 /**
@@ -27,6 +35,9 @@ public class MyController {
 	@Resource
 	private ChannelService channelService;
 	
+	
+	@Resource
+	private ArticleService articleService;
 	//个人中心首页
 	@RequestMapping(value = {"","/","index"})
 	public String index() {
@@ -72,5 +83,32 @@ public class MyController {
 		return channelService.selectsByChannelId(channelId);
 	}
 	
+	@ResponseBody
+	@PostMapping("article/publish")
+	public boolean publish( MultipartFile file, ArticleWithBLOBs article) throws IllegalStateException, IOException {
+		String path="d:/pic/";
+		
+		if(!file.isEmpty()) {
+		    //获取原始文件名称
+			String filename = file.getOriginalFilename();
+			//防止文件重名
+			String newFileName = UUID.randomUUID()+filename.substring(filename.lastIndexOf("."));
+			//把文件写入硬盘
+			file.transferTo(new File(path,newFileName));
+			//数据库存储文件地址
+			article.setPicture(newFileName);
+		}
+		//
+		article.setCreated(new Date());//发布时间
+		article.setStatus(0);//文章状态 0:待审核
+		article.setHits(0);//点击量
+		article.setDeleted(0);//是否删除// 0:未删除
+		article.setUpdated(new Date());//更新时间
+		article.setUserId(156);//暂时写死
+		
+		return articleService.insertSelective(article)>0;
+		
+		
+	}
 	
 }
