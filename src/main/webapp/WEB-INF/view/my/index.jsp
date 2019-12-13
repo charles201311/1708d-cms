@@ -24,7 +24,7 @@
 			<!-- 菜单 -->
 			<div class="col-md-3" style="background-color: #ccc">
 				<div class="list-group" style="margin-top: 20px">
-					<a href="#" class="list-group-item list-group-item-action active">
+					<a id="aaa" href="#" data="/my/article/articles" class="list-group-item list-group-item-action active">
 						我的文章 </a> <a href="#" data="/my/article/publish"
 						class="list-group-item list-group-item-action">发布文章</a> <a
 						href="#" class="list-group-item list-group-item-action">我的收藏</a> <a
@@ -35,7 +35,7 @@
 			</div>
 			<!-- 中间内容区域 -->
 			<div class="col-md-9" id="center">
-				<!-- 引入kindeditor -->
+				<!-- 引入kindeditor ,但不显示-->
 				<div style="display: none">
 					<jsp:include page="/resource/kindeditor/jsp/demo.jsp" />
 				</div>
@@ -51,14 +51,17 @@
 </body>
 <script type="text/javascript">
 	$(function() {
+		 //默认现在我的文章列表
+		$("#center").load("/my/article/articles");
+		
 
 		//为a标签添加点击事件
 		$("a").click(function() {
 			var url = $(this).attr("data");
 			//先删除已有的选中样式
-			$("a").removeClass("list-group-item-warning");
+			$("a").removeClass("active");
 			//再为点击的a标签添加点击样式
-			$(this).addClass("list-group-item-warning");
+			$(this).addClass("active");
 			//在中间区域加载url
 			$("#center").load(url);
 		})

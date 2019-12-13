@@ -31,4 +31,16 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleMapper.insertSelective(record);
 	}
 
+	@Override
+	public ArticleWithBLOBs selectByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		return articleMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(ArticleWithBLOBs record) {
+		
+		return articleMapper.updateByPrimaryKeySelective(record);
+	}
+
 }

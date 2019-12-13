@@ -54,6 +54,8 @@
     
     
     </where>
+    <!-- 按照文章的修改时间.倒序 -->
+    order by updated desc
   
   </select>
   

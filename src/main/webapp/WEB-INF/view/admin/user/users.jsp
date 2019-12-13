@@ -82,7 +82,7 @@ function update(id,obj){
 	//要改变为的状态
 	var locked =$(obj).text()=="正常"?1:0;
 	
-	$.post("/user/update",{id:id,locked:locked},function(flag){
+	$.post("/admin/user/update",{id:id,locked:locked},function(flag){
 		if(flag){
 			//alert("操作成功");
 			//改变内容

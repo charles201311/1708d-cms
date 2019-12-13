@@ -79,11 +79,12 @@ $(function(){
 <script type="text/javascript">
 //发布文章
 function publish(){
-	
+	//FormData .里面包含普通文本和文件对象
 	var formData = new FormData($("#form1")[0]);
 	//alert(formData)
-	//封装带html格式的内容
+	//单独 封装带html格式的内容,因为 文章里面的内容可能包含 加粗,图片等等
      formData.set("content",editor1.html());
+	
 	$.ajax({
 		type:"post",
 		url:"/my/article/publish",
@@ -95,6 +96,8 @@ function publish(){
 		success:function(flag){
 			if(flag){
 				alert("发布成功");
+				//跳转到我的文章
+				location.href="/my";
 			}else{
 				alert("发布失败");
 			}

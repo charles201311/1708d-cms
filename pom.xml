@@ -273,7 +273,7 @@
 							<contextPath>/pic/</contextPath>
 
 							<!-- 物理路径 -->
-							<resourceBase>/resource/pic/</resourceBase>
+							<resourceBase>d:/pic/</resourceBase>
 						</jettyWebAppContext>
 
 					</contextHandlers>
