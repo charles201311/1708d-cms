@@ -27,7 +27,7 @@
 						<fmt:formatDate value="${a.created}" pattern="yyyy-MM-dd HH:mm:ss"/> 
 						<span style="float: right">
 						<c:if test="${a.deleted==0}">
-						 <button type="button" onclick="update(${a.id},this)" class="btn-sm btn-danger">删除</button></span> 
+						 <button type="button" onclick="update(${a.id},this)" class="btn-sm btn-danger" style="width: 62px">删除</button></span> 
 						</c:if>
 					    <c:if test="${a.deleted==1}">
 						 <button type="button" onclick="update(${a.id},this)" class="btn-sm btn-warning">已删除</button></span> 

@@ -22,7 +22,7 @@
 
 		<div class="row" style="height: 550px">
 			<!-- 菜单 -->
-			<div class="col-md-3" style="background-color: #ccc">
+			<div class="col-md-3" style="background-color: #ccc" >
 				<div class="list-group" style="margin-top: 20px">
 					<a id="aaa" href="#" data="/my/article/articles" class="list-group-item list-group-item-action active">
 						我的文章 </a> <a href="#" data="/my/article/publish"

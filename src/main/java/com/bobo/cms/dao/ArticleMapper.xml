@@ -51,8 +51,17 @@
       and  status =#{status}
      </if>
      
+    <if test="channelId!=null">
+      and  channel_Id =#{channelId}
+     </if>
     
+     <if test="categoryId!=null">
+      and  category_id =#{categoryId}
+     </if>
     
+     <if test="hot!=null">
+      and  hot =#{hot}
+     </if>
     </where>
     <!-- 按照文章的修改时间.倒序 -->
     order by updated desc
