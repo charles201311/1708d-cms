@@ -22,6 +22,8 @@ public class User implements Serializable{
     private String username;
 
     private String password;
+    
+    private  String repassword;//重复密码
 
     private String nickname;//昵称
 
@@ -39,7 +41,16 @@ public class User implements Serializable{
 
     private String url;
 
-    public Integer getId() {
+    
+    public String getRepassword() {
+		return repassword;
+	}
+
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
+	}
+
+	public Integer getId() {
         return id;
     }
 

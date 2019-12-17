@@ -15,7 +15,10 @@
 		<div class="row" style="height: 80px; margin-top: 8px">
 			<div class="col-md-12" style="background-color: #0073B7">
 				<img alt="" src="/resource/images/logo.png" height="80px"
-					class="rounded-circle">
+					class="rounded-circle"><font color="white">CMS后台管理</font>
+					<span><font color="white"> 登录人:${sessionScope.admin.username }</font>
+					 <a href="/passport/logout">注销</a>
+					</span>
 			</div>
 		</div>
 		<hr style="height: 1px; border: none; border-top: 1px dotted #185598;" />
@@ -67,6 +70,10 @@
 <script type="text/javascript">
 
  $(function(){
+	 
+	 
+	 //中间区域默认显示用户列表
+$("#center").load("/admin/user/selects");
 	 
 	 //为a标签添加点击事件
 	 $("a").click(function(){

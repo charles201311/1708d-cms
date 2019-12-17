@@ -15,7 +15,9 @@
 		<div class="row" style="height: 80px; margin-top: 8px">
 			<div class="col-md-12" style="background-color: black">
 				<img alt="" src="/resource/images/logo.png" height="80px"
-					class="rounded-circle"> <font color="#ffffff">个人中心</font>
+					class="rounded-circle"> <font color="#ffffff">个人中心 登录人:${sessionScope.user.username }
+					 <a href="/passport/logout">注销</a>
+					</font>
 			</div>
 		</div>
 		<hr style="height: 1px; border: none; border-top: 1px dotted #185598;" />

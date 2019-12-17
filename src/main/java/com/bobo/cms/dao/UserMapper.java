@@ -16,6 +16,15 @@ public interface UserMapper {
 	 * @return: List<User>
 	 */
 	List<User> selects(@Param("username")String username);
+	/**
+	 * 按照用户查询
+	 * @Title: selectByName 
+	 * @Description: TODO
+	 * @param name
+	 * @return
+	 * @return: User
+	 */
+	User selectByName(@Param("username")String name);
 	
     int deleteByPrimaryKey(Integer id);
 

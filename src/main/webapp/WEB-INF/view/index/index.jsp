@@ -66,7 +66,7 @@ li {
 		<div class="row" style="height: 34px; background-color: #222222">
 			<a href="#"><font color="#FFFFFF" size="3px">下载APP</font></a>
 			<div style="left: -8px">
-				<a href="#"> 登录|注册</a>
+				<a href="/passport/login"> 登录</a>|<a href="/passport/reg"> 注册</a>
 			</div>
 		</div>
 	</div>

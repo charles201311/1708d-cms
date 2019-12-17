@@ -19,7 +19,10 @@
     id, username, password, nickname, birthday, gender, locked, created, updated, role, 
     url
   </sql>
+  <select id="selectByName" resultMap="BaseResultMap">
+  select * from cms_user where username =#{username}
   
+  </select>
   
   <select id="selects" resultMap="BaseResultMap">
   
