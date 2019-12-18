@@ -33,6 +33,7 @@ public class IndexController {
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer pageSize) {
 		//0.封装查询条件
+		article.setStatus(1);
 		model.addAttribute("article", article);
 		//1. 查询出所有的栏目
 				List<Channel> channels = channelService.selects();
@@ -48,7 +49,7 @@ public class IndexController {
 			
 			Article a2 = new Article();
 			a2.setHot(1);// 1 推荐文章的标志
-			
+			a2.setStatus(1);//2.审核过的文章
 			//2.查询推荐下的所有的文章
 			PageInfo<Article> info = articleService.selects(a2, page, pageSize);	
 			model.addAttribute("info", info);
@@ -71,8 +72,10 @@ public class IndexController {
 			}
 		}
        //页面右侧显示最近发布的5篇文章
+		Article last = new Article();
+		last.setStatus(1);
 		
-		PageInfo<Article> lastInfo = articleService.selects(new Article(), 1, 5);
+		PageInfo<Article> lastInfo = articleService.selects(last, 1, 5);
 		model.addAttribute("lastInfo", lastInfo);
 		
 		

@@ -62,6 +62,13 @@
      <if test="hot!=null">
       and  hot =#{hot}
      </if>
+       <if test="userId!=null">
+      and  user_id =#{userId}
+     </if>
+     
+      <if test="status!=null">
+      and  status =#{status}
+     </if>
     </where>
     <!-- 按照文章的修改时间.倒序 -->
     order by updated desc

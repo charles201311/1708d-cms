@@ -42,7 +42,7 @@
 			<td>作者</td>
 			<td>文章状态</td>
 			<td>发布时间</td>
-			<td>操作</td>
+			<td colspan="2">操作</td>
 		</tr>
 		<c:forEach items="${info.list}" var="a" varStatus="i">
 			<tr align="center">
@@ -54,7 +54,18 @@
 				<td>${a.status==0?"待审":a.status==1?"已审":"驳回" }
 				</td>
 				<td><fmt:formatDate value="${a.created }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-				<td>详情			
+				<td>
+				<c:if test="${a.hot==0}">
+				 <button type="button" class="btn btn-success" onclick="update(${a.id},this)">非热门</button>
+				
+				</c:if>
+				<c:if test="${a.hot==1}">
+				 <button type="button" class="btn btn-warning" onclick="update(${a.id},this)">热门</button>
+				
+				</c:if>
+				
+				</td>
+				<td><a href="/admin/article/select?id=${a.id }" target="_blank">详情</a>			
 				 </td>
 			</tr>
 
@@ -71,6 +82,29 @@
 </div>
  </body>
  <script type="text/javascript">
+//更新文章热门状态   1:热门, 0:非热门
+ function update(id,obj){
+ 	//要改变为的状态
+ 	var status =$(obj).text()=="非热门"?1:0;
+ 	
+ 	$.post("/admin/article/update",{id:id,status:status},function(flag){
+ 		if(flag){
+ 			//alert("操作成功");
+ 			//改变内容
+ 			$(obj).text(status==1?"热门":"非热门");
+ 			//改变颜色
+ 			$(obj).attr("class",status==1?"btn btn-warning":"btn btn-success")
+ 		}else{
+ 			alert("操作失败")
+ 		}
+ 	})
+ 	
+ 	
+ }
+
+ 
+ 
+ 
  function goPage(page){
 	 //location.href="/user/selects?page="+page
 		var  url="/admin/article/selects?page="+page+"&title="+$("[name='title']").val()+"&status="+$("[name='status']").val()

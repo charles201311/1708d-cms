@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,10 +132,11 @@ public class MyController {
 	 * @return: String
 	 */
 	@GetMapping("article/articles")
-	public String articles(Model model, Article article, @RequestParam(defaultValue = "1") Integer page,
+	public String articles(Model model, HttpServletRequest request,Article article, @RequestParam(defaultValue = "1") Integer page,
 			@RequestParam(defaultValue = "3") Integer pageSize) {
-	
-		article.setUserId(156);//暂时写死.只查询当前用户的文章
+		HttpSession session = request.getSession();
+		User u = (User) session.getAttribute("user");
+		article.setUserId(u.getId());//只查询当前用户的文章
 		
 		PageInfo<Article> info = articleService.selects(article, page, pageSize);
 		model.addAttribute("info", info);
@@ -154,7 +157,7 @@ public class MyController {
 	 */
 	@ResponseBody
 	@PostMapping("article/publish")
-	public boolean publish( MultipartFile file, ArticleWithBLOBs article) throws IllegalStateException, IOException {
+	public boolean publish( MultipartFile file, ArticleWithBLOBs article,HttpServletRequest request) throws IllegalStateException, IOException {
 		String path="d:/pic/";//文件存放路径
 		//判断上传文件是否为空,若不为空,则上传
 		if(!file.isEmpty()) {
@@ -174,7 +177,10 @@ public class MyController {
 		article.setHits(0);//点击量
 		article.setDeleted(0);//是否删除// 0:未删除
 		article.setUpdated(new Date());//更新时间
-		article.setUserId(156);//发布人.暂时写死
+	//从session获取当前登录人的信息。用来指定发布人
+		HttpSession session = request.getSession();
+		User u = (User) session.getAttribute("user");
+		article.setUserId(u.getId());//发布人
 		article.setHot(0);//非热文章
 		return articleService.insertSelective(article)>0;
 		

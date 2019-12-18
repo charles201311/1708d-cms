@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bobo.cms.domain.Article;
+import com.bobo.cms.domain.ArticleWithBLOBs;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.UserService;
@@ -86,6 +87,38 @@ public class AdminController {
 
 		return "admin/user/users";
 	}
+	
+	/**
+	 * 查询文章详情，
+	 * @Title: select 
+	 * @Description: TODO
+	 * @param id
+	 * @return
+	 * @return: String
+	 */
+	@GetMapping("article/select")
+	public String select(Model model ,Integer id) {
+		ArticleWithBLOBs a = articleService.selectByPrimaryKey(id);
+		
+		model.addAttribute("a", a);
+		return "admin/article/article";
+	}
+	
+	/**
+	 * 
+	 * @Title: update
+	 * @Description:审核文章
+	 * 	 * @param user
+	 * @return
+	 * @return: boolean
+	 */
+	@ResponseBody
+	@PostMapping("article/update")
+	public boolean update(ArticleWithBLOBs article) {
+		return articleService.updateByPrimaryKeySelective(article)> 0;
+	}
+	
+	
 
 	/**
 	 * 

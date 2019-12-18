@@ -190,8 +190,10 @@ li {
 	</div>
 	<script type="text/javascript">
 		function goPage(page) {
-
-			location.href = "?channelId='${article.channelId}'&categoryId='{article.categoryId}'&page="
+              var  channelId='${article.channelId}';
+              var  categoryId='${article.categoryId}';
+              
+			location.href = "?channelId="+channelId+"&categoryId="+categoryId+"&page="
 					+ page;
 
 		}
