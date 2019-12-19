@@ -64,9 +64,15 @@ li {
 
 	<div class="container-fluid">
 		<div class="row" style="height: 34px; background-color: #222222">
-			<a href="#"><font color="#FFFFFF" size="3px">下载APP</font></a>
+			<a href="#"><font color="#FFFFFF" size="3px">下载APP &nbsp;</font></a>
 			<div style="left: -8px">
+			   <c:if test="${null!=sessionScope.user}">
+			          <font style="color: white">登录人：${sessionScope.user.username },<a href="/password/logout">註銷</a>
+			      </font>
+			    </c:if>
+			   <c:if test="${null==sessionScope.user}">
 				<a href="/passport/login"> 登录</a>|<a href="/passport/reg"> 注册</a>
+				</c:if>
 			</div>
 		</div>
 	</div>

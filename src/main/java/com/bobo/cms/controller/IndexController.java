@@ -1,22 +1,30 @@
 package com.bobo.cms.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.ArticleWithBLOBs;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.Comment;
 import com.bobo.cms.domain.Slide;
+import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
+import com.bobo.cms.service.CommentService;
 import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
 
@@ -29,6 +37,9 @@ public class IndexController {
 	
 	@Resource
 	private SlideService slideService;
+	
+	@Resource
+	private CommentService commentService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer pageSize) {
@@ -89,12 +100,40 @@ public class IndexController {
 	//查询单个文章
 	@GetMapping("article")
 	public String article(Integer id,Model model) {
-		ArticleWithBLOBs a = articleService.selectByPrimaryKey(id);
-		model.addAttribute("a", a);
+		ArticleWithBLOBs article = articleService.selectByPrimaryKey(id);
+		model.addAttribute("article", article);
+		
+		//查詢出評論
+		Comment comment = new Comment();
+		comment.setArticleId(article.getId());
+		PageInfo<Comment> info = commentService.selects(comment, 1, 100);
+		model.addAttribute("info", info);
 		return "/index/article";
 		
 	}
 
+	/**
+	 * 评论
+	 * @Title: addComment 
+	 * @Description: TODO
+	 * @param comment
+	 * @param request
+	 * @return
+	 * @return: boolean
+	 */
+	@ResponseBody
+	@PostMapping
+	public boolean addComment(Comment comment,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		//获取session中的用户对象
+		User user = (User) session.getAttribute("user");
+		if(null==user)
+		 return false;//没有登录，不能评论
+		comment.setUserId(user.getId());
+		comment.setCreated(new Date());
+		return commentService.insert(comment)>0;
+		
+	}
 	
 
 	

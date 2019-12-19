@@ -8,16 +8,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${a.title }</title>
+<title>${article.title }</title>
 <!-- 引入样式 -->
 <link href="/resource/css/bootstrap.css" rel="stylesheet">
 
 </head>
 <body>
 	<div class="container">
-	  <h1 align="center">${a.title }</h1>
-	  <h3>${a.user.username} <fmt:formatDate value="${a.created }" pattern="yyyy-MM-dd HH:mm:ss"/></h3>
-	  <div align="center"> ${a.content }</div> 
+	  <h1 align="center">${article.title }</h1>
+	  <h3>${a.user.username} <fmt:formatDate value="${article.created }" pattern="yyyy-MM-dd HH:mm:ss"/></h3>
+	  <div align="center"> ${article.content }</div> 
+	
+	  <div>
+	    <jsp:include page="/WEB-INF/view/index/comment.jsp"/>
+	  
+	  </div>
+	  <div>
+	    <dl>
+	      <c:forEach items="${info.list}" var="comment">
+	      <dt>${comment.user.username },<fmt:formatDate value="${comment.created }" pattern="yyyy-MM-dd HH:mm:ss"/>  </dt>
+	      <dd>${comment.content }</dd>
+	      <hr>
+	      </c:forEach>
+	   </dl>
+	    
+	  
+	  </div>
 	
 	</div>
 </html>

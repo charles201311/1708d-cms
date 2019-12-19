@@ -23,9 +23,11 @@ import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.ArticleWithBLOBs;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.Comment;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
+import com.bobo.cms.service.CommentService;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -45,11 +47,32 @@ public class MyController {
 	
 	@Resource
 	private ArticleService articleService;
+	
+	@Resource
+	private CommentService commentService;
 	//个人中心首页
 	@RequestMapping(value = {"","/","index"})
 	public String index() {
 		
 		return "my/index";
+		
+	}
+	
+	/**
+	 * 查詢我的評論
+	 * @Title: comments 
+	 * @Description: TODO
+	 * @return
+	 * @return: String
+	 */
+	@RequestMapping("article/comments")
+	public String comments(Model model,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Comment comment = new Comment();
+		comment.setUserId(user.getId());
+		PageInfo<Comment> info = commentService.selects(comment, 1, 100);
+		model.addAttribute("info", info);
+		return "my/article/comments";
 		
 	}
 	/**
