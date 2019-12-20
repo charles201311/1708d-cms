@@ -67,7 +67,7 @@ li {
 			<a href="#"><font color="#FFFFFF" size="3px">下载APP &nbsp;</font></a>
 			<div style="left: -8px">
 			   <c:if test="${null!=sessionScope.user}">
-			          <font style="color: white">登录人：${sessionScope.user.username },<a href="/password/logout">註銷</a>
+			          <font style="color: white">登录人：${sessionScope.user.username },<a href="/passport/logout">註銷</a>
 			      </font>
 			    </c:if>
 			   <c:if test="${null==sessionScope.user}">
