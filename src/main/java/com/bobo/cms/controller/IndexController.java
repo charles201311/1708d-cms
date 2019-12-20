@@ -20,11 +20,13 @@ import com.bobo.cms.domain.ArticleWithBLOBs;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
 import com.bobo.cms.domain.Comment;
+import com.bobo.cms.domain.Complain;
 import com.bobo.cms.domain.Slide;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
 import com.bobo.cms.service.CommentService;
+import com.bobo.cms.service.ComplainService;
 import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
 
@@ -40,6 +42,9 @@ public class IndexController {
 	
 	@Resource
 	private CommentService commentService;
+	
+	@Resource
+	private ComplainService complainService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer pageSize) {
@@ -134,7 +139,25 @@ public class IndexController {
 		return commentService.insert(comment)>0;
 		
 	}
-	
+	//去举报
+	@GetMapping("complain")
+	public String complain(Model model ,Article article,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(null!=user) {//如果有户登录
+			article.setUser(user);//封装举报人和举报的文章
+			model.addAttribute("article", article);
+			return "index/complain";//转发到举报页面
+		}
+		
+		return "redirect:/passport/login";//没有登录，先去登录
+		
+	}
+	//执行举报
+	@ResponseBody
+	@PostMapping("complain")
+	public boolean complain(Complain complain) {
+		return complainService.insert(complain);
+	}
 
 	
 }

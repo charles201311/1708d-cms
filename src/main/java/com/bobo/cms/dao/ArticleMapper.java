@@ -29,4 +29,6 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
 
     int updateByPrimaryKey(Article record);
+    
+    int updateComplainnum(Integer articleId);//更新举报数量
 }

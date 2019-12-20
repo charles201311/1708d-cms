@@ -37,6 +37,13 @@
     content, summary
   </sql>
   
+  
+  <!-- 举报次数加1 -->
+  <update id="updateComplainnum">
+  
+  update cms_article set complain_num=complain_num +1 where id=#{id}
+  </update>
+  
   <select id="selects" resultMap="BaseResultMap">
    
   select <include refid="Base_Column_List"/> from cms_article
