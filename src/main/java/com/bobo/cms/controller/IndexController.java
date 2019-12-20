@@ -122,7 +122,7 @@ public class IndexController {
 	 * @return: boolean
 	 */
 	@ResponseBody
-	@PostMapping
+	@PostMapping("addComment")
 	public boolean addComment(Comment comment,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		//获取session中的用户对象
