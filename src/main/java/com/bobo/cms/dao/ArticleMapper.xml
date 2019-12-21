@@ -17,7 +17,9 @@
     <result column="content_type" property="contentType" jdbcType="INTEGER" />
     <result column="keywords" property="keywords" jdbcType="VARCHAR" />
     <result column="original" property="original" jdbcType="VARCHAR" />
-    
+ <result column="complain_num" property="complainNum" jdbcType="INTEGER" />   
+ 
+  
     <!-- 封装单个对象. user -->
     <association property="user" select="com.bobo.cms.dao.UserMapper.selectByPrimaryKey" column="user_id"></association>
     <association property="channel" select="com.bobo.cms.dao.ChannelMapper.selectByPrimaryKey" column="channel_id"></association>
@@ -31,7 +33,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, picture, channel_id, category_id, user_id, hits, hot, status, deleted, 
-    created, updated, content_type, keywords, original
+    created, updated, content_type, keywords, original,complain_num
   </sql>
   <sql id="Blob_Column_List" >
     content, summary

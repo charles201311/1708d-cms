@@ -15,12 +15,28 @@ public class Complain {
 	private Integer articleId;//被举报的文章
 	private String picurl;//举报图片
 	
+	private String url;//举报的文章地址
+	
+	
 	private  Integer user_id;//举报人人ID
 	
 	private  String created;//举报时间
 	
+	private String complain_num;//举报次数
+	
 	private Article article;
 	private User user;
+	
+	
+	
+	
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public Integer getId() {
 		return id;
 	}

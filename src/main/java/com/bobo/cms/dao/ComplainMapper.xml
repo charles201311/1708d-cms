@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bobo.cms.dao.ComplainMapper" >
-  <insert id="insert">
-  insert into cms_complain(content,user_id,created,article_id,picurl) 
-  values(#{content},#{user_id},#{created},#{articleId},#{picurl})
-  
-  </insert>
+<mapper namespace="com.bobo.cms.dao.ComplainMapper">
+	<insert id="insert">
+		insert into
+		cms_complain(content,user_id,created,article_id,picurl,url,typename)
+		values(#{content},#{user_id},now(),#{articleId},#{picurl},#{url},#{typename})
+
+	</insert>
+
+	<resultMap type="Complain" id="complainResultMap">
+		<id column="id" property="id" />
+		<result column="content" property="content" />
+		<result column="created" property="created" />
+		<result column="typename" property="typename" />
+		<result column="user_id" property="user_id" />
+		<result column="picurl" property="picurl" />
+		<result column="url" property="url" />
+		
+		<!-- 封装user -->
+		<association property="user" javaType="User"
+			select="com.bobo.cms.dao.UserMapper.selectByPrimaryKey"
+			column="user_id"></association>
+		<association property="article" javaType="Article"
+			select="com.bobo.cms.dao.ArticleMapper.selectByPrimaryKey"
+			column="article_id"></association>
+	</resultMap>
+
+	<select id="selects" resultMap="complainResultMap">
+		select c.*,a.complain_num from cms_complain
+		  c LEFT JOIN  cms_article a on c.article_id =a.id
+		  
+		  
+		<where>
+			<if test="typename!=null and typename!=''">
+				c.typename=#{typename}
+
+			</if>
+			<if test="startNum!=null">
+				and a.complain_num>=#{startNum}
+
+			</if>
+
+			<if test="endNum!=null">
+				and a.complain_num &lt;=#{endNum}
+
+			</if>
+
+			<if test="startTime!=null and startTime!=''">
+				and c.created>=#{startTime}
+
+			</if>
+
+			<if test="endTime!=null and endTime!=''">
+				and c.created &lt;=#{endTime}
+
+			</if>
+
+		</where>
+          <!-- 排序 -->
+         <if test="(orderName!=null and orderName!='') and orderMethod!=null and  orderName!=''">
+          order by ${orderName} ${orderMethod}
+         
+         </if>
+	</select>
 </mapper>

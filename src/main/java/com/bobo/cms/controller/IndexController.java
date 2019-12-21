@@ -1,7 +1,10 @@
 package com.bobo.cms.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.ArticleWithBLOBs;
@@ -28,6 +32,7 @@ import com.bobo.cms.service.ChannelService;
 import com.bobo.cms.service.CommentService;
 import com.bobo.cms.service.ComplainService;
 import com.bobo.cms.service.SlideService;
+import com.bobo.cms.util.CMSException;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -155,8 +160,36 @@ public class IndexController {
 	//执行举报
 	@ResponseBody
 	@PostMapping("complain")
-	public boolean complain(Complain complain) {
-		return complainService.insert(complain);
+	public boolean complain(Model model,MultipartFile  file, Complain complain) {
+		if(null!=file &&!file.isEmpty()) {
+			String path="d:/pic/";
+			String filename = file.getOriginalFilename();
+		   String newFileName =UUID.randomUUID()+filename.substring(filename.lastIndexOf("."));
+			File f = new File(path,newFileName);
+			try {
+				file.transferTo(f);
+				complain.setPicurl(newFileName);
+				
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			//执行举报
+			 complainService.insert(complain);
+				return true;
+		} catch (CMSException e) {
+			e.printStackTrace();
+			
+			model.addAttribute("error", e.getMessage());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("error", "系统错误，联系管理员");
+		}
+		return false;
+	
+	    
 	}
 
 	

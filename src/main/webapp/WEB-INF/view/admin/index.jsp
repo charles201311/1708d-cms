@@ -38,6 +38,11 @@
 					<a class="navbar-brand" href="#" data="/admin/article/selects">文章管理</a>
 					</span>
 				</nav>
+				<nav class="navbar navbar-light bg-light">
+					<span class="navbar-brand mb-0 h1">
+					<a class="navbar-brand" href="#" data="/admin/article/complains">举报管理</a>
+					</span>
+				</nav>
 				<!-- As a heading -->
 				<nav class="navbar navbar-light bg-light">
 					<span class="navbar-brand mb-0 h1">栏目管理</span>

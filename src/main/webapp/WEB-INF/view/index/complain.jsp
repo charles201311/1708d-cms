@@ -11,14 +11,31 @@
 
 <script type="text/javascript">
 
+
+
+
+
 function add(){
-	$.post("/complain",$("#form1").serialize(),function(flag){
-		if(flag){
-			alert("举报成功");
-			location.href="/"
-		}else{
-			alert("举报失败");
+	
+	var formData = new FormData($( "#form2" )[0]);
+	
+	$.ajax({
+		type:"post",
+		url:"/complain",
+		data:formData,
+		processData : false,
+		// 告诉jQuery不要去设置Content-Type请求头
+		contentType : false,
+		success:function(flag){
+			if(flag){
+				alert("举报成功")
+				location.href="/";
+			}else{
+				alert("举报失败，url 不正确")
+			}
 		}
+		
+		
 	})
 }
 </script>
@@ -27,8 +44,11 @@ function add(){
 	<div align="center" class="container" style="width: 600px">
 		<h1>举报信息</h1>
 		<hr>
-		<form action="" id="form1">
+		
+		<form  id="form2">
+		  <!-- 文章 -->
 		 <input type="hidden" name="articleId" value="${article.id }">
+		 <!-- 用户 -->
 		 <input type="hidden" name="user_id" value="${article.user.id }">
 			<div class="form-group form-inline">
 				举报类型:<select name="typename" class="form-control">

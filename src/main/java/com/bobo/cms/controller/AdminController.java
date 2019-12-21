@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.ArticleWithBLOBs;
+import com.bobo.cms.domain.Complain;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
+import com.bobo.cms.service.ComplainService;
 import com.bobo.cms.service.UserService;
+import com.bobo.cms.vo.ComplainVO;
 import com.github.pagehelper.PageInfo;
 
 //127.0.0.1/admin
@@ -28,6 +31,8 @@ public class AdminController {
 	@Resource
 	private ArticleService articleService;
 
+	@Resource
+	private ComplainService complainService;
 	/**
 	 * 
 	 * @Title: index
@@ -135,5 +140,20 @@ public class AdminController {
 	}
 	
 	
+	//查询投诉
+	@GetMapping("article/complains")
+	public String complain(Model model ,ComplainVO complainVO , 
+			@RequestParam(defaultValue = "1") Integer page,
+			@RequestParam(defaultValue = "3") Integer pageSize) {
+		
+		
+		
+		
+		PageInfo<Complain> info = complainService.selects(complainVO, page, pageSize);
+		model.addAttribute("info", info);
+		model.addAttribute("complainVO", complainVO);
+		
+		return "admin/article/complains";
+	}
 
 }

@@ -53,8 +53,22 @@ public class Article implements Serializable {
     private String original;
 
     
+    private Integer complainNum;//文章举报次数
     
-    public User getUser() {
+    
+    
+    
+
+
+	public Integer getComplainNum() {
+		return complainNum;
+	}
+
+	public void setComplainNum(Integer complainNum) {
+		this.complainNum = complainNum;
+	}
+
+	public User getUser() {
 		return user;
 	}
 
