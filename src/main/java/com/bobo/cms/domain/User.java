@@ -40,9 +40,20 @@ public class User implements Serializable{
     private String role;//角色: 0:普通用户  1:管理员
 
     private String url;
+    private String isRemember;//记住用户
+    
+    
 
     
-    public String getRepassword() {
+    public String getIsRemember() {
+		return isRemember;
+	}
+
+	public void setIsRemember(String isRemember) {
+		this.isRemember = isRemember;
+	}
+
+	public String getRepassword() {
 		return repassword;
 	}
 

@@ -1,6 +1,9 @@
 package com.bobo.cms.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.UserService;
 import com.bobo.cms.util.CMSException;
+import com.bobo.cms.util.CookieUtil;
+import com.bobo.common.utils.StringUtil;
 
 //用户登录注册模块
 @RequestMapping("passport")
@@ -29,12 +34,19 @@ public class PassportController {
 		return "passport/login";
 
 	}
+	
 
 	// 执行登录页面
 	@PostMapping("login")
-	public String login(Model model,User user,HttpSession session) {
+	public String login(Model model,User user,HttpSession session,HttpServletResponse response) {
 		try {
 			User u = userService.login(user);
+			//如果用户勾选了 【记住我】
+			if(StringUtil.hasText(user.getIsRemember())) {
+				CookieUtil.addCookie(response,"username", u.getUsername(), 60 * 60 * 24 * 30);//存一个月
+				CookieUtil.addCookie(response,"password", u.getPassword(), 60 * 60 * 24 * 30);//存一个月
+			}
+			
 			// 根据角色进入不同的页面
 			if("0".equals(u.getRole())){//普通用户,进入个人中心
 				//登录成功.存入session
