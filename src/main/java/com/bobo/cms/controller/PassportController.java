@@ -1,5 +1,7 @@
 package com.bobo.cms.controller;
 
+import java.net.HttpCookie;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ import com.bobo.cms.util.CMSException;
 import com.bobo.cms.util.CookieUtil;
 import com.bobo.common.utils.StringUtil;
 
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression.DateTime;
+
 //用户登录注册模块
 @RequestMapping("passport")
 @Controller
@@ -34,39 +38,39 @@ public class PassportController {
 		return "passport/login";
 
 	}
-	
 
 	// 执行登录页面
 	@PostMapping("login")
-	public String login(Model model,User user,HttpSession session,HttpServletResponse response) {
+	public String login(Model model, User user, HttpSession session, HttpServletResponse response) {
 		try {
 			User u = userService.login(user);
-			//如果用户勾选了 【记住我】
-			if(StringUtil.hasText(user.getIsRemember())) {
-				CookieUtil.addCookie(response,"username", u.getUsername(), 60 * 60 * 24 * 30);//存一个月
-				CookieUtil.addCookie(response,"password", u.getPassword(), 60 * 60 * 24 * 30);//存一个月
-			}
 			
+			
+			// 如果用户勾选了 【10天免登陆】
+			if (StringUtil.hasText(user.getIsRemember())) {
+				CookieUtil.addCookie(response, "username", u.getUsername(), 60 * 60 * 24 * 10);// 存10天
+				CookieUtil.addCookie(response, "password", u.getPassword(), 60 * 60 * 24 * 10);// 存10天
+			}
+
 			// 根据角色进入不同的页面
-			if("0".equals(u.getRole())){//普通用户,进入个人中心
-				//登录成功.存入session
+			if ("0".equals(u.getRole())) {// 普通用户,进入个人中心
+				// 登录成功.存入session
 				session.setAttribute("user", u);
 				return "redirect:/my";
-			}else {
-				//登录成功.存入session
+			} else {
+				// 登录成功.存入session
 				session.setAttribute("admin", u);
-				return "redirect:/admin";//管理员
+				return "redirect:/admin";// 管理员
 			}
-			
+
 		} catch (CMSException e) {
 			e.printStackTrace();
 			model.addAttribute("error", e.getMessage());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("error", "系统异常,请于管理员联系");
 		}
-	
-		
+
 		return "passport/login";
 	}
 
@@ -102,15 +106,27 @@ public class PassportController {
 		return "passport/reg";// 注册失败
 
 	}
-	
-	
+
 //注销
 	@GetMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse resp) {
+
+         //让cookie删除
+		Cookie[] cookies = request.getCookies();
+		if (null != cookies) {
+			for (Cookie cookie : cookies) {
+				// System.out.println("cookie.getName():"+cookie.getName());
+				if (cookie.getName().equals("username")) {
+					cookie.setMaxAge(0);//cookie的存活时间。 0：删除cookie
+					cookie.setPath("/");
+					resp.addCookie(cookie);
+				}
+			}
+		}
+		//删除session
 		session.invalidate();
 		return "redirect:/passport/login";
-		
+
 	}
-	
 
 }

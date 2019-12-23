@@ -35,7 +35,7 @@
 							class="form-control" type="password" name="password">
 					</div>
 					<div class="form-group form-inline">
-						<label for="isRemember">30天免登陆:</label> <input 
+						<label for="isRemember">10天免登陆:</label> <input 
 							class="form-check-input" type="checkbox" name="isRemember">
 					</div>
 					<div class="form-group">

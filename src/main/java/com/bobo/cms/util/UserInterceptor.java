@@ -48,7 +48,9 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 	@Resource
 	private UserMapper userMapper;
 
+	
 	private boolean rememberAutoLogin(HttpServletRequest request,HttpSession session) {
+		//从cookie获取账户密码
 		Cookie cokUsername = CookieUtil.getCookieByName(request, "username");
 		Cookie cokPassword = CookieUtil.getCookieByName(request, "password");
 		// 从cookie获取用户名和密码

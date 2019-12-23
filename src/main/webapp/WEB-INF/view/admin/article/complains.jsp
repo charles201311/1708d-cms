@@ -23,7 +23,9 @@ $(function(){
 
  function goPage(page){
 	 //location.href="/user/selects?page="+page
-		var  url="/admin/article/complains?page="+page
+			 var orderMethod = '${complainVO.orderMethod}';
+			 var orderName = '${complainVO.orderName}';
+		var  url="/admin/article/complains?page="+page+$("#form1").serialize()+"&orderName="+orderName+"&orderMethod="+orderMethod;
 		$("#center").load(url);	 //
 			 
  }
